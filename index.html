@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ласточка 2.0 — АРТ-концепция — TAKNADO BÜRO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Oswald:wght@700&family=Space+Grotesk:wght@300;400;500;600&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Space Grotesk',sans-serif;background:#1a1815;color:#f0ede8;line-height:1.55}
+:root{
+  --bg:#1a1815;--bg-surface:#22201d;--bg-light:#f5f3ee;--bg-warm:#1f1812;
+  --accent:#c0392b;--accent-warm:#d9703e;
+  --text:#f0ede8;--text-dim:rgba(240,237,232,0.5);
+  --text-dark:#1a1815;--text-dark-dim:#6b5f52;
+  --border:rgba(255,255,255,0.08);--border-accent:rgba(192,57,43,0.25);
+  --font-display:'Archivo Black',sans-serif;--font-body:'Space Grotesk',sans-serif;--font-mono:'Space Mono',monospace
+}
+h1,h2,h3{font-family:var(--font-display);font-weight:900;line-height:1.1}
+h1{font-size:clamp(2.2rem,6vw,5rem)}h2{font-size:clamp(1.6rem,4vw,3rem)}h3{font-size:clamp(1.1rem,2.2vw,1.6rem)}
+section{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;justify-content:center;padding:clamp(2.5rem,6vh,6rem) clamp(1.5rem,5vw,5rem)}
+.container{max-width:1100px;margin:0 auto;width:100%}
+.section-dark{background:var(--bg)}.section-surface{background:var(--bg-surface)}
+.section-light{background:var(--bg-light);color:var(--text-dark)}
+.section-warm{background:var(--bg-warm)}
+.label{font-family:var(--font-display);font-size:clamp(0.7rem,1vw,0.85rem);letter-spacing:0.15em;text-transform:uppercase;color:var(--accent-warm);margin-bottom:0.4rem;display:block}
+
+/* IDEA DIVIDER */
+.idea-divider{
+  min-height:50vh;min-height:50dvh;align-items:center;text-align:center;justify-content:center;
+  background:#ddd8cf;
+  background-image:repeating-linear-gradient(0deg,rgba(0,0,0,0.04) 0px,rgba(0,0,0,0.04) 1px,transparent 1px,transparent 40px),repeating-linear-gradient(90deg,rgba(0,0,0,0.04) 0px,rgba(0,0,0,0.04) 1px,transparent 1px,transparent 40px);
+  border-top:3px solid var(--accent-warm);border-bottom:1px solid rgba(0,0,0,0.08);
+  color:var(--text-dark)
+}
+.idea-divider .idea-num-label{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(3.5rem,10vw,8rem);letter-spacing:0.02em;color:var(--accent);text-transform:uppercase;line-height:0.9;margin-bottom:1.2rem;display:block}
+.idea-divider .num{display:none}
+.idea-divider h2{font-size:clamp(2rem,5vw,3.5rem);position:relative;z-index:1;color:var(--text-dark)}
+.idea-divider h2 em{font-style:normal;color:var(--accent)}
+.idea-divider .line{width:clamp(60px,8vw,120px);height:4px;background:var(--accent-warm);margin:clamp(0.75rem,1.5vh,1.5rem) auto 0}
+.idea-divider p{color:var(--text-dark-dim);margin-top:1rem;font-size:clamp(0.85rem,1.2vw,1rem)}
+.section-sep{border-top:1px solid rgba(217,112,62,0.2)}
+
+/* HERO */
+.hero{background:radial-gradient(ellipse at 30% 40%,rgba(192,57,43,0.07),transparent 55%),radial-gradient(ellipse at 70% 70%,rgba(217,112,62,0.05),transparent 45%),var(--bg);text-align:center;align-items:center}
+.hero .brand-line{font-family:var(--font-display);font-size:clamp(0.8rem,1.3vw,1.1rem);letter-spacing:0.22em;color:var(--accent-warm);margin-bottom:clamp(1.5rem,3vh,2.5rem)}
+.hero h1{max-width:900px;margin:0 auto clamp(1rem,2vh,1.5rem)}
+.hero .subtitle{font-size:clamp(1rem,1.6vw,1.25rem);color:var(--text-dim);font-weight:300;max-width:600px;margin:0 auto}
+.hero .ideas-preview{display:flex;gap:clamp(0.75rem,1.5vw,1.25rem);margin-top:clamp(2.5rem,6vh,4rem);justify-content:center;flex-wrap:wrap}
+.hero .ideas-preview{gap:clamp(1rem,2vw,1.8rem)!important}
+.idea-chip-wrap{display:flex;flex-direction:column;align-items:center;gap:0.35rem;text-decoration:none}
+.idea-chip-label{font-family:var(--font-mono);font-size:clamp(0.58rem,0.75vw,0.68rem);letter-spacing:0.18em;color:var(--accent-warm);text-transform:uppercase}
+.hero .idea-chip{font-family:var(--font-display);font-size:clamp(0.78rem,1.1vw,1rem);padding:0.75em 1.4em;border:1px solid rgba(255,255,255,0.18);color:rgba(240,237,232,0.8);letter-spacing:0.04em;background:rgba(255,255,255,0.03);cursor:pointer;transition:all .3s ease;white-space:nowrap;display:block}
+.hero .idea-chip:hover{border-color:var(--accent-warm);color:#fff;background:var(--accent-warm);transform:translateY(-3px);box-shadow:0 8px 24px rgba(217,112,62,0.35)}
+
+/* IMAGES */
+.image-row{display:grid;grid-template-columns:1fr 1fr;gap:clamp(0.75rem,1.5vw,1.5rem);margin:clamp(1rem,2.5vh,2rem) 0}
+.image-row img{width:100%;height:auto;max-height:50vh;object-fit:cover}
+.caption{font-size:clamp(0.7rem,0.9vw,0.8rem);color:var(--text-dim);font-style:italic;text-align:center;margin-top:0.3rem}
+
+/* COMPARE */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1rem,2vw,2rem);margin-top:clamp(1.5rem,3vh,2.5rem)}
+@media(max-width:650px){.compare{grid-template-columns:1fr}}
+.compare-box{padding:clamp(1.2rem,2.5vw,2rem);border:1px solid rgba(0,0,0,0.08);background:#fff}
+.compare-box.dark{background:rgba(255,255,255,0.03);border:1px solid var(--border)}
+.compare-box h3{margin-bottom:clamp(0.5rem,1vh,0.8rem);font-size:clamp(0.95rem,1.6vw,1.2rem)}
+.compare-box li{font-size:clamp(0.85rem,1.3vw,1rem);color:var(--text-dark-dim)}
+.compare-box.dark li{color:var(--text-dim)}
+.compare-box ul{list-style:none;display:flex;flex-direction:column;gap:0.4rem}
+.compare-box li::before{content:'→ ';color:var(--accent-warm)}
+.compare-highlight{border:1px solid rgba(192,57,43,0.25)!important;background:rgba(192,57,43,0.02)!important}
+.compare-highlight h3{color:var(--accent)!important}
+
+/* CARDS */
+.card-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(0.75rem,1.2vw,1.25rem);width:100%}
+@media(max-width:768px){.card-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.card-grid{grid-template-columns:1fr}}
+.card{background:rgba(255,255,255,0.025);border:1px solid var(--border);padding:clamp(1.2rem,2.5vw,2rem);display:flex;flex-direction:column;gap:clamp(0.5rem,1vh,0.75rem);transition:transform .35s cubic-bezier(.34,1.56,.64,1),border-color .3s ease,box-shadow .3s ease;overflow:hidden}
+.card:hover{transform:translateY(-5px);border-color:rgba(255,255,255,0.2);box-shadow:0 12px 32px rgba(0,0,0,0.3)}
+.card h3{font-family:var(--font-display);font-size:clamp(0.95rem,1.5vw,1.2rem);color:var(--accent-warm)}
+.card p{font-size:clamp(0.82rem,1.2vw,0.95rem);color:var(--text-dim);line-height:1.45}
+.card-accent{border-color:var(--border-accent)}.card-accent h3{color:var(--accent)}
+.section-light .card{background:#fff;border-color:rgba(0,0,0,0.06);box-shadow:4px 4px 0 rgba(0,0,0,0.05)}
+.section-light .card:hover{box-shadow:6px 6px 0 rgba(0,0,0,0.08);border-color:rgba(0,0,0,0.15)}
+.section-light .card p{color:var(--text-dark-dim)}
+.card .thumb{width:calc(100% + 2px);height:clamp(100px,16vh,160px);object-fit:cover;margin:-0.2rem -0.2rem 0.3rem -0.2rem;transition:transform .35s ease;overflow:hidden}
+.card:hover .thumb{transform:scale(1.06)}
+.card .thumb-lg{height:clamp(160px,24vh,240px)}
+
+/* COST */
+.cost-table{width:100%;border-collapse:collapse;margin:clamp(1.5rem,3vh,2.5rem) 0}
+.cost-table td{padding:clamp(0.5rem,0.8vh,0.7rem) clamp(0.5rem,1vw,0.8rem);font-size:clamp(0.8rem,1.2vw,0.95rem);border-bottom:1px solid var(--border)}
+.cost-table .cat{font-family:var(--font-display);font-size:clamp(0.75rem,1vw,0.85rem);color:var(--accent-warm);letter-spacing:0.08em;padding-top:clamp(1rem,1.5vh,1.2rem);border-bottom:1px solid rgba(255,255,255,0.15)}
+.cost-table .price{font-family:var(--font-mono);text-align:right;white-space:nowrap}
+.cost-table .total{font-family:var(--font-display);font-size:clamp(1.1rem,1.8vw,1.4rem);color:var(--accent)}
+.cost-table .total .price{font-size:clamp(1.2rem,2vw,1.6rem);color:var(--accent)}
+
+/* FOOTER */
+.footer{background:#111;text-align:center;padding:clamp(3rem,8vh,6rem) clamp(1.5rem,5vw,5rem);min-height:auto!important}
+.footer .brand{font-family:var(--font-display);font-size:clamp(1.5rem,3vw,2.5rem);color:var(--accent);margin-bottom:0.5rem}
+.footer .credit{font-size:clamp(0.8rem,1.1vw,0.9rem);color:var(--text-dim)}
+.footer .social{display:flex;gap:clamp(1rem,2vw,2rem);justify-content:center;align-items:center;margin:1rem 0;flex-wrap:wrap}
+.footer .social a{color:var(--text-dim);text-decoration:none;font-size:clamp(0.8rem,1.1vw,0.9rem);transition:color .2s;display:inline-flex;align-items:center;gap:0.35em}
+.footer .social a:hover{color:#fff}.footer .social .ic{width:18px;height:18px;flex-shrink:0}
+
+/* STICKY */
+.sticky-hd{position:fixed;top:0;left:0;right:0;background:rgba(26,24,21,0.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:clamp(0.5rem,1vh,0.8rem) clamp(1.5rem,5vw,5rem);display:flex;justify-content:space-between;align-items:center;z-index:100;transform:translateY(-100%);transition:transform .3s ease}
+.sticky-hd.on{transform:translateY(0)}
+.sticky-hd .name{font-family:var(--font-display);font-size:clamp(0.65rem,0.9vw,0.78rem);letter-spacing:0.12em}
+.sticky-hd nav{display:flex;gap:clamp(1rem,2vw,1.8rem)}
+.sticky-hd nav a{color:var(--text-dim);text-decoration:none;font-size:clamp(0.65rem,0.9vw,0.78rem);transition:color .2s}
+.sticky-hd nav a:hover{color:var(--accent-warm)}
+
+/* ═══ FEEDBACK MODE ═══ */
+body.feedback-mode *{cursor:crosshair!important}
+body.feedback-mode [data-fb]:hover{outline:2px solid var(--accent-warm)!important;outline-offset:3px;position:relative}
+body.feedback-mode [data-fb]:hover::before{
+  content:'Кликни чтобы добавить правку';
+  position:absolute;top:-2em;left:0;
+  background:var(--accent-warm);color:#fff;
+  font-family:var(--font-mono);font-size:10px;
+  padding:2px 8px;border-radius:3px;
+  white-space:nowrap;pointer-events:none;z-index:10000;
+  font-style:normal;text-transform:none;letter-spacing:0
+}
+.fb-badge{
+  position:absolute;top:-10px;right:-10px;
+  width:22px;height:22px;border-radius:50%;
+  background:var(--accent);color:#fff;
+  font-family:var(--font-mono);font-size:11px;font-weight:bold;
+  display:flex;align-items:center;justify-content:center;
+  z-index:500;pointer-events:none;box-shadow:0 2px 8px rgba(0,0,0,0.4)
+}
+
+/* Feedback panel */
+
+
+
+
+
+
+
+.fb-item{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:4px;padding:0.75rem 1rem;font-size:0.82rem;line-height:1.45;position:relative}
+.fb-item-label{font-family:var(--font-mono);font-size:0.68rem;color:var(--accent-warm);margin-bottom:0.3rem;text-transform:uppercase;letter-spacing:0.06em}
+.fb-item-text{color:var(--text)}
+.fb-del{position:absolute;top:0.5rem;right:0.6rem;background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:0.9rem;line-height:1}
+.fb-del:hover{color:var(--accent)}
+
+
+
+
+
+/* Modal overlay */
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Portfolio buttons hover */
+.exp-link{display:inline-flex;align-items:center;gap:0.5em;text-decoration:none;font-family:var(--font-display);font-size:clamp(0.72rem,0.9vw,0.82rem);letter-spacing:0.1em;color:rgba(240,237,232,0.8);border:1px solid rgba(255,255,255,0.18);padding:0.75em 1.5em;background:rgba(255,255,255,0.03);cursor:pointer;transition:all .3s ease;white-space:nowrap}
+.exp-link:hover{border-color:var(--accent-warm);color:#fff;background:var(--accent-warm);transform:translateY(-3px);box-shadow:0 8px 24px rgba(217,112,62,0.35)}
+.exp-btn:hover{border-color:var(--accent-warm)!important;color:var(--accent-warm)!important;background:rgba(217,112,62,0.06)!important}
+/* Toggle button */
+
+
+
+body.feedback-mode 
+</style>
+</head>
+<body>
+
+<!-- ═══ FEEDBACK TOGGLE ═══ -->
+
+
+<!-- ═══ FEEDBACK PANEL ═══ -->
+<section class="hero" id="top">
+  <div class="container">
+    <p class="brand-line">TAKNADO BÜRO  ×  ЛАСТОЧКА 2.0</p>
+    <h1>5 АРТ-идей для<br>Города талантов</h1>
+    <p class="subtitle">Бывший гаражный кооператив → культурное пространство.<br>Иммерсивный театр, свет, музыка, арт-объекты.<br>Кемерово, 2026</p>
+    <div class="ideas-preview">
+      <div class="idea-chip-wrap"><span class="idea-chip-label">ИДЕЯ 1</span><a href="#div1" class="idea-chip">Кузбасс-арт</a></div>
+      <div class="idea-chip-wrap"><span class="idea-chip-label">ИДЕЯ 2</span><a href="#div2" class="idea-chip">Кузбасс-метро</a></div>
+      <div class="idea-chip-wrap"><span class="idea-chip-label">ИДЕЯ 3</span><a href="#div3" class="idea-chip">Фотоспот</a></div>
+      <div class="idea-chip-wrap"><span class="idea-chip-label">ИДЕЯ 4</span><a href="#div4" class="idea-chip">ГАРАЖ №130</a></div>
+      <div class="idea-chip-wrap"><span class="idea-chip-label">ИДЕЯ 5</span><a href="#div5" class="idea-chip">Контейнер-арт</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ IDEA 1 ═══ -->
+<section class="idea-divider" id="div1">
+  <div class="idea-num-label">ИДЕЯ №1</div>
+  <h2>«Кузбасс-арт»</h2>
+  <div class="line"></div>
+  <p>Сибирская легенда на колёсах</p>
+</section>
+
+<section class="section-light">
+  <div class="container">
+    <span class="label" style="color:var(--accent);">Концепция</span>
+    <h2 style="color:var(--text-dark);">Cadillac Ranch — сибирский аналог</h2>
+    <div class="image-row" style="grid-template-columns:1fr 1fr;">
+      <div>
+        <img src="img/cadillac-ranch.jpg" alt="Cadillac Ranch, Техас" loading="lazy" style="aspect-ratio:16/10;">
+        <p class="caption">Оригинал: Cadillac Ranch, Техас, 1974.</p>
+      </div>
+      <div>
+        <img src="img/kuzbass-art.jpg" alt="Кузбасс-арт, Кемерово" loading="lazy" style="aspect-ratio:16/10;">
+        <p class="caption">Наша версия: Волги ГАЗ-24 с авторскими муралами. Кемерово, 2026.</p>
+      </div>
+    </div>
+    <div class="compare">
+      <div class="compare-box">
+        <h3 style="color:var(--text-dark-dim);">Техас, 1974</h3>
+        <ul>
+          <li>10 Cadillac в земле под 45°</li>
+          <li>Пустыня, шоссе Route 66</li>
+          <li>50+ лет привлекает туристов</li>
+          <li>Каждый может рисовать</li>
+        </ul>
+      </div>
+      <div class="compare-box compare-highlight">
+        <h3 style="color:var(--accent);">Кемерово, 2026</h3>
+        <ul>
+          <li>8–10 легенд советского автопрома (Волга ГАЗ-24, Москвич, Жигули — что найдём дешевле)</li>
+          <li>Уютный парк, зелень, огоньки</li>
+          <li>Авторские муралы — не тэги, а АРТ</li>
+          <li>Мост к гаражному ДНК площадки</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-warm">
+  <div class="container">
+    <span class="label">ИДЕЯ 1 — Модель реализации</span>
+    <h2>Живой арт-объект</h2>
+    <p style="color:var(--text-dim);max-width:900px;font-size:clamp(0.85rem,1.2vw,1rem);margin:clamp(0.5rem,1vh,1rem) 0 clamp(1.5rem,3vh,2.5rem);">Инсталляция живёт и обновляется — новый слой = инфоповод + возврат аудитории.</p>
+    <div class="card-grid">
+      <div class="card"><h3>Открытие</h3><p>Приглашённый художник создаёт единую инсталляцию. Мастер-класс с баллончиками под кураторством Такнадо.</p></div>
+      <div class="card"><h3>Ротация</h3><p>1 раз в год, весной на открытие сезона. Топ-художник или фестиваль: каждому по машине.</p></div>
+      <div class="card"><h3>UGC-слой</h3><p>Посетители рисуют в любой день. Объект эволюционирует как оригинал. Бесплатный контент.</p></div>
+      <div class="card card-accent"><h3>Корпоративы</h3><p>Команда + художник + баллончики. Тимбилдинг через стрит-арт. Премиум-монетизация.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-surface section-sep">
+  <div class="container">
+    <span class="label">Смета — Идея 1</span>
+    <h2>Примерный расчёт</h2>
+    <table class="cost-table">
+      <tr><td class="cat" colspan="2">Приобретение + транспортировка</td></tr>
+      <tr><td>Легенды советского автопрома (8–10 шт.: Волга, Москвич, Жигули) + доставка по Кемерово</td><td class="price">320 000 – 640 000 ₽</td></tr>
+      <tr><td class="cat" colspan="2">Подготовка + установка</td></tr>
+      <tr><td>Подготовка автомобилей, земляные работы, бетонирование, металлокаркас для фиксации</td><td class="price">280 000 – 520 000 ₽</td></tr>
+      <tr><td class="cat" colspan="2">Художественные работы</td></tr>
+      <tr><td>Первый слой росписи (8–10 авто) + мастер-класс на открытие + кураторский надзор</td><td class="price">160 000 – 360 000 ₽</td></tr>
+      <tr><td class="cat" colspan="2">Непредвиденное ~10%</td></tr>
+      <tr><td></td><td class="price">76 000 – 152 000 ₽</td></tr>
+      <tr style="border-top:2px solid var(--accent);">
+        <td class="total">ИТОГО</td>
+        <td class="total"><span class="price">836 000 – 1 672 000 ₽</span></td>
+      </tr>
+    </table>
+    <p style="color:var(--text-dim);font-size:clamp(0.7rem,0.9vw,0.78rem);font-style:italic;">НДС отсутствует (ИП на УСН). Цены мая 2026. Срок: 2–3 месяца.</p>
+  </div>
+</section>
+
+<!-- ═══ IDEA 2 ═══ -->
+<section class="idea-divider" id="div2">
+  <div class="idea-num-label">ИДЕЯ №2</div>
+  <h2>«Кузбасс-метро»</h2>
+  <div class="line"></div>
+  <p>Метро, которого нет. Одна станция. Зато какая.</p>
+</section>
+
+<section class="section-light">
+  <div class="container">
+    <span class="label" style="color:var(--accent);">Концепция</span>
+    <h2 style="color:var(--text-dark);">Вагон поезда как арт-объект</h2>
+    <p style="color:var(--text-dark-dim);max-width:600px;font-size:clamp(0.9rem,1.3vw,1.05rem);margin:clamp(0.5rem,1vh,1rem) 0 clamp(1.5rem,3vh,2rem);">Списанный вагон → кофейня внутри + галерея граффити снаружи. В Кузбассе нет метро нигде — ирония становится точкой притяжения.</p>
+    <div class="image-row">
+      <div>
+        <img src="img/idea2-wynwood-miami.jpg" alt="Wynwood Walls" loading="lazy" style="aspect-ratio:16/10;">
+        <p class="caption">Wynwood Walls, Майами — вагон на уровне земли, без колёс, со ступеньками.</p>
+      </div>
+      <div>
+        <img src="img/train-delivery.jpg" alt="Доставка вагона" loading="lazy" style="aspect-ratio:16/10;">
+        <p class="caption">Вагон на платформе — доставка к месту установки.</p>
+      </div>
+    </div>
+    <div class="compare">
+      <div class="compare-box">
+        <h3 style="color:var(--text-dark-dim);">Wynwood Walls — Майами</h3>
+        <ul>
+          <li>Вагон на земле, без колёс</li>
+          <li>Ступеньки для входа</li>
+          <li>Постоянная инсталляция</li>
+          <li>Расписан легендами граффити</li>
+        </ul>
+      </div>
+      <div class="compare-box compare-highlight">
+        <h3 style="color:var(--accent);">Кемерово — наша версия</h3>
+        <ul>
+          <li>Вагон метро или вагон поезда</li>
+          <li>Внутри: кофейня → арендный доход</li>
+          <li>Снаружи: ротация художников</li>
+          <li>Навигация в стиле метро</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-surface">
+  <div class="container">
+    <span class="label">ИДЕЯ 2 — Модель реализации</span>
+    <h2>Вагон-галерея</h2>
+    <div class="card-grid" style="margin-top:clamp(1.5rem,3vh,2.5rem);">
+      <div class="card"><h3>Закуп и установка</h3><p>Вагон метро или поезда — на уровне земли, без колёс. Подключение электричества.</p><img src="img/img2_card1_new.jpg" alt="" class="thumb thumb-lg" loading="lazy"></div>
+      <div class="card"><h3>Внутри — аренда</h3><p>Кофейня / сувенирный. Сдача локальному бизнесу. Доход круглый год.</p><img src="img/metro-interior.jpg" alt="" class="thumb thumb-lg" loading="lazy"></div>
+      <div class="card"><h3>Снаружи — ротация</h3><p>Художник 1–2 раза в сезон. Каждый слой = новый инфоповод.</p><img src="img/img2_card3_new.jpg" alt="" class="thumb thumb-lg" loading="lazy"></div>
+      <div class="card card-accent"><h3>Навигация</h3><p>Указатели в стиле метро. «Станция Кузбасс-метро» на карте.</p><img src="img/img2_card4_new.jpg" alt="" class="thumb thumb-lg" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-surface section-sep">
+  <div class="container">
+    <span class="label">Смета — Идея 2</span>
+    <h2>Примерный расчёт</h2>
+    <table class="cost-table">
+      <tr><td class="cat" colspan="2">Приобретение + доставка</td></tr>
+      <tr><td>Вагон метро / поезда (списанный) + транспортировка до Кемерово</td><td class="price">150 000 – 300 000 ₽</td></tr>
+      <tr><td class="cat" colspan="2">Подготовка + установка</td></tr>
+      <tr><td>Установка на площадке (если есть колёса — оставляем), электрика, внутренняя отделка</td><td class="price">150 000 – 350 000 ₽</td></tr>
+      <tr><td class="cat" colspan="2">Художественные работы</td></tr>
+      <tr><td>Роспись всего вагона снаружи + кураторский надзор</td><td class="price">150 000 – 280 000 ₽</td></tr>
+      <tr><td class="cat" colspan="2">Непредвиденное ~10%</td></tr>
+      <tr><td></td><td class="price">45 000 – 93 000 ₽</td></tr>
+      <tr style="border-top:2px solid var(--accent);">
+        <td class="total">ИТОГО</td>
+        <td class="total"><span class="price">495 000 – 1 023 000 ₽</span></td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<!-- ═══ IDEA 3 ═══ -->
+<section class="idea-divider" id="div3">
+  <div class="idea-num-label">ИДЕЯ №3</div>
+  <h2>«Фотоспот»</h2>
+  <div class="line"></div>
+  <p>Сцена для контента. 3×3 метра чистого искусства.</p>
+</section>
+
+<section class="section-light">
+  <div class="container">
+    <span class="label" style="color:var(--accent);">Концепция</span>
+    <h2 style="color:var(--text-dark);">Универсальная фотозона</h2>
+    <div class="image-row">
+      <div>
+        <img src="img/idea3-ФОТОСПОТ-1.png.jpg" alt="Вариант Куб" loading="lazy" style="aspect-ratio:1/1;">
+        <p class="caption">Вариант А: «Куб». Стены + потолок + подиум со ступеньками.</p>
+      </div>
+      <div>
+        <img src="img/idea3-ФОТОСПОТ-3.png.jpg" alt="Фотоспот — вариант" loading="lazy" style="aspect-ratio:1/1;">
+        <p class="caption">Вариант Б: открытая фотозона с подиумом.</p>
+      </div>
+    </div>
+    <div class="compare">
+      <div class="compare-box">
+        <h3 style="color:var(--text-dark-dim);">Вариант А — Куб</h3>
+        <ul>
+          <li>5 поверхностей с росписью</li>
+          <li>Подиум с 2 ступеньками</li>
+          <li>Закрытая конструкция — любой свет</li>
+        </ul>
+      </div>
+      <div class="compare-box compare-highlight">
+        <h3 style="color:var(--accent);">Вариант Б — Открытый</h3>
+        <ul>
+          <li>3 поверхности с росписью</li>
+          <li>Подиум 10–20 см</li>
+          <li>Проще, дешевле, быстрее</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-warm">
+  <div class="container">
+    <span class="label">ИДЕЯ 3 — Модель реализации</span>
+    <h2>Два бюджета — одна идея</h2>
+    <div class="compare" style="margin-top:clamp(1.5rem,3vh,2rem);">
+      <div class="compare-box" style="background:rgba(0,0,0,0.2);border-color:rgba(255,255,255,0.1);">
+        <h3 style="color:var(--accent-warm);">Эконом</h3>
+        <ul>
+          <li>Влагостойкая фанера 18–21 мм</li>
+          <li>Деревянный каркас (брус)</li>
+          <li>Грунт + фасадный акрил + лак</li>
+          <li>Срок: 3–5 лет</li>
+        </ul>
+      </div>
+      <div class="compare-box" style="background:rgba(0,0,0,0.2);border-color:rgba(255,255,255,0.1);">
+        <h3 style="color:var(--accent-warm);">Премиум</h3>
+        <ul>
+          <li>Алюминиевый композит (АКП)</li>
+          <li>Металлокаркас (сварной)</li>
+          <li>Спецгрунт + акрил + защитный лак</li>
+          <li>Срок: 10+ лет</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card-grid" style="margin-top:clamp(1.5rem,3vh,2rem);">
+      <div class="card"><h3>Материалы</h3><p>Фанера или АКП + каркас + грунт + краски + лак. Доставка на площадку.</p></div>
+      <div class="card"><h3>Сборка</h3><p>Монтаж на месте. 2–3 дня работы бригады.</p></div>
+      <div class="card"><h3>Художник</h3><p>Роспись поверхностей. Авторский дизайн под проект.</p></div>
+      <div class="card card-accent"><h3>Кураторство</h3><p>Проектирование + надзор + приёмка. Такнадо Бюро.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-surface section-sep">
+  <div class="container">
+    <span class="label">Смета — Идея 3</span>
+    <h2>Примерный расчёт</h2>
+    <table class="cost-table">
+      <tr><td class="cat" colspan="2">Вариант А — Куб</td></tr>
+      <tr><td>Материалы + доставка + сборка + проектирование (5 поверхностей)</td><td class="price">180 000 – 320 000 ₽</td></tr>
+      <tr><td>Художник (роспись) + грунт + лак</td><td class="price">120 000 – 180 000 ₽</td></tr>
+      <tr><td>Кураторский надзор</td><td class="price">40 000 – 70 000 ₽</td></tr>
+      <tr><td class="cat" colspan="2">Непредвиденное ~10%</td></tr>
+      <tr><td></td><td class="price">34 000 – 57 000 ₽</td></tr>
+      <tr style="border-top:2px solid var(--accent);">
+        <td class="total">ИТОГО — Куб</td>
+        <td class="total"><span class="price">374 000 – 627 000 ₽</span></td>
+      </tr>
+      <tr><td class="cat" colspan="2" style="padding-top:1.5rem;">Вариант Б — Открытый</td></tr>
+      <tr><td>Материалы + доставка + сборка (3 поверхности)</td><td class="price">110 000 – 180 000 ₽</td></tr>
+      <tr><td>Художник (роспись 3 поверхностей)</td><td class="price">80 000 – 110 000 ₽</td></tr>
+      <tr><td>Кураторский надзор</td><td class="price">30 000 – 50 000 ₽</td></tr>
+      <tr><td class="cat" colspan="2">Непредвиденное ~10%</td></tr>
+      <tr><td></td><td class="price">22 000 – 34 000 ₽</td></tr>
+      <tr style="border-top:2px solid var(--accent);">
+        <td class="total">ИТОГО — Открытый</td>
+        <td class="total"><span class="price">242 000 – 374 000 ₽</span></td>
+      </tr>
+    </table>
+    <p style="color:var(--text-dim);font-size:clamp(0.7rem,0.9vw,0.78rem);font-style:italic;">НДС отсутствует (ИП на УСН). Цены ориентировочные.</p>
+  </div>
+</section>
+
+<!-- ═══ IDEA 4 ═══ -->
+<section class="idea-divider" id="div4">
+  <div class="idea-num-label">ИДЕЯ №4</div>
+  <h2>«ГАРАЖ №130»</h2>
+  <div class="line"></div>
+  <p>Гараж срывается с фундамента и везёт искусство по городам.</p>
+</section>
+
+<section class="section-light">
+  <div class="container">
+    <span class="label" style="color:var(--accent);">Идея 4</span>
+    <h2 style="color:var(--text-dark);">ГАРАЖ №130 — мобильная галерея</h2>
+    <p style="color:var(--text-dark-dim);max-width:600px;font-size:clamp(0.9rem,1.3vw,1.05rem);margin:clamp(0.5rem,1vh,1rem) 0 clamp(1.5rem,3vh,2rem);">Два смысла: гаражный бокс + упаковка (искусство упаковано в гараж).<br>130 — индекс модели ЗиЛ.</p>
+    <div class="image-row" style="grid-template-columns:1fr 1fr;gap:clamp(0.5rem,1vw,1rem);">
+      <div>
+        <img src="img/idea4-zil-side.jpg" alt="ГАРАЖ №130 — вид сбоку" loading="lazy" style="aspect-ratio:4/3;max-height:65vh;object-fit:cover;">
+        <p class="caption">ГАРАЖ №130 — ЗиЛ с гаражным боксом. Вывеска в стиле Мулен Руж.</p>
+      </div>
+      <div>
+        <img src="img/idea4-zil-interior.jpg" alt="Галерея внутри" loading="lazy" style="aspect-ratio:4/3;max-height:65vh;object-fit:cover;">
+        <p class="caption">Вид сзади — ворота открыты, внутри белая галерея. Ступеньки, свет, искусство.</p>
+      </div>
+    </div>
+    <div class="compare">
+      <div class="compare-box">
+        <h3 style="color:var(--text-dark-dim);">Индустриальное прошлое</h3>
+        <ul>
+          <li>Запах бензина и мужского детства</li>
+          <li>Пыльный гараж с верстаком</li>
+          <li>Масляные пятна на полу</li>
+          <li>Мёртвая индустриальная эстетика</li>
+        </ul>
+      </div>
+      <div class="compare-box compare-highlight">
+        <h3 style="color:var(--accent);">Живое арт-пространство</h3>
+        <ul>
+          <li>Белая галерея на колёсах</li>
+          <li>Ступеньки из травы → вход в искусство</li>
+          <li>Вывеска в стиле Мулен Руж</li>
+          <li>Тяжёлое стало лёгким. Гараж полетел.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-surface">
+  <div class="container">
+    <span class="label">ИДЕЯ 4 — Модель реализации</span>
+    <h2>Гараж-трансформер:<br>четыре режима</h2>
+    <div class="card-grid" style="margin-top:clamp(1.5rem,3vh,2.5rem);">
+      <div class="card"><h3>Галерея</h3><p>Двери открыты. Внутри — выставка. Ступеньки ведут в белое пространство. Смотришь искусство в гараже.</p></div>
+      <div class="card"><h3>Лекторий</h3><p>Стулья внутри, экран/проектор. Камерное пространство на 10–15 человек. Арт-медиации, воркшопы.</p></div>
+      <div class="card"><h3>Тизер на колёсах</h3><p>ЗиЛ-130 на ходу — ездит по городу и области. Привлекает внимание к площадке. Мобильный анонс.</p></div>
+      <div class="card card-accent"><h3>Ночной режим</h3><p>Двери закрыты. Смотровое окно с подсветкой. Прислонился — увидел искусство. Без персонала.</p></div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section-surface section-sep">
+  <div class="container">
+    <span class="label">Смета — Идея 4</span>
+    <h2>Примерный расчёт</h2>
+    <table class="cost-table">
+      <tr><td class="cat" colspan="2">Приобретение + восстановление</td></tr>
+      <tr><td>ЗиЛ-130 на ходу + покраска кузова по дизайн-схеме</td><td class="price">200 000 – 400 000 ₽</td></tr>
+      <tr><td class="cat" colspan="2">Гаражный бокс на платформе</td></tr>
+      <tr><td>Металл-гараж (коробка) + доставка + монтаж на платформу + внутренняя отделка (white cube)</td><td class="price">70 000 – 120 000 ₽</td></tr>
+      <tr><td class="cat" colspan="2">Оснащение + оформление</td></tr>
+      <tr><td>Освещение, вывеска, смотровое окно, ступеньки + дизайн-схема + кураторство</td><td class="price">150 000 – 250 000 ₽</td></tr>
+      <tr><td>Первая выставка: приглашение художника, монтаж экспозиции</td><td class="price">50 000 – 120 000 ₽</td></tr>
+      <tr><td class="cat" colspan="2">Непредвиденное ~10%</td></tr>
+      <tr><td></td><td class="price">47 000 – 89 000 ₽</td></tr>
+      <tr style="border-top:2px solid var(--accent);">
+        <td class="total">ИТОГО</td>
+        <td class="total"><span class="price">517 000 – 979 000 ₽</span></td>
+      </tr>
+    </table>
+    <p style="color:var(--accent-warm);font-size:clamp(0.82rem,1.1vw,0.92rem);margin-top:1rem;padding:0.6rem 1rem;border-left:3px solid var(--accent-warm);background:rgba(217,112,62,0.08);">💡 <strong>Экономия:</strong> ЗиЛ не на ходу (стационарный объект) — 100–150 тыс. ₽ вместо 200–400 тыс. Минус 100–250 тыс. к итогу.</p>
+    <p style="color:var(--text-dim);font-size:clamp(0.7rem,0.9vw,0.78rem);font-style:italic;margin-top:0.5rem;">НДС отсутствует (ИП на УСН).</p>
+  </div>
+</section>
+
+<!-- ═══ IDEA 5 ═══ -->
+<section class="idea-divider" id="div5">
+  <div class="idea-num-label">ИДЕЯ №5</div>
+  <h2>«Контейнер-арт»</h2>
+  <div class="line"></div>
+  <p>Брутальные объёмы превращаются в галерею под открытым небом.</p>
+</section>
+
+<section class="section-light">
+  <div class="container">
+    <span class="label" style="color:var(--accent);">Идея 5</span>
+    <h2 style="color:var(--text-dark);">Контейнер-арт —<br>галерея из металла</h2>
+    <p style="color:var(--text-dark-dim);max-width:600px;font-size:clamp(0.9rem,1.3vw,1.05rem);margin:clamp(0.5rem,1vh,1rem) 0 clamp(1.5rem,3vh,2rem);">Контейнеры уже есть на площадке — мы их превращаем в арт-объекты. Роспись торцов + фестивальный формат. Масштаб ограничен только фантазией.</p>
+    <div class="image-row">
+      <div>
+        <img src="img/idea5-КОНТЕЙНЕР-10.jpg" alt="ЛОФТ Мельница, Новосибирск" loading="lazy" style="aspect-ratio:16/10;">
+        <p class="caption">Наш кейс: ЛОФТ «Мельница», Новосибирск. Контейнеры стали точкой притяжения — приезжают свадьбы.</p>
+      </div>
+      <div>
+        <img src="img/idea5-КОНТЕЙНЕР-2.jpg" alt="North West Walls" loading="lazy" style="aspect-ratio:16/10;">
+        <p class="caption">North West Walls, Бельгия — куратор Arne Quinze. Башни из контейнеров на фестивале Rock Werchter.</p>
+      </div>
+    </div>
+    <div class="compare">
+      <div class="compare-box">
+        <h3 style="color:var(--text-dark-dim);">Наш кейс — Мельница</h3>
+        <ul>
+          <li>Контейнерный ЛОФТ в Новосибирске</li>
+          <li>Расписаны Такнадо Бюро</li>
+          <li>Видно с дороги — знаковое место</li>
+          <li>Свадьбы, блогеры, must-have фото</li>
+        </ul>
+      </div>
+      <div class="compare-box compare-highlight">
+        <h3 style="color:var(--accent);">Город талантов — версия</h3>
+        <ul>
+          <li>Полная роспись контейнеров — все поверхности</li>
+          <li>Авторский дизайн + брендирование</li>
+          <li>Фестивальный запуск: художники + музыка</li>
+          <li>Видимость с дороги = organic reach</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-surface">
+  <div class="container">
+    <span class="label">ИДЕЯ 5 — Модель реализации</span>
+    <h2>Контейнерный арт-кластер</h2>
+    <div class="card-grid" style="margin-top:clamp(1.5rem,3vh,2.5rem);">
+      <div class="card"><h3>Полная роспись</h3><p>Расписываем все поверхности контейнеров — и торцы, и длинные стороны. Каждый контейнер — отдельный холст. Масштаб не ограничен.</p></div>
+      <div class="card"><h3>Фестиваль</h3><p>Запуск в формате фестиваля: 5–10 художников, музыка, еда. Однодневное событие → контент на год.</p></div>
+      <div class="card"><h3>Брендирование</h3><p>Контейнеры арендаторов получают уникальный визуальный стиль. Арендатор становится частью арт-объекта.</p></div>
+      <div class="card card-accent"><h3>Видимость</h3><p>Расположение: чтобы было видно с дороги. Как Мельница в Новосибирске — люди останавливаются специально.</p></div>
+    </div>
+    <blockquote style="margin-top:clamp(2rem,4vh,3rem);padding:clamp(1rem,2vw,1.5rem) clamp(1.5rem,3vw,2.5rem);border-left:4px solid var(--accent-warm);background:rgba(255,255,255,0.03);">
+      <p style="font-family:var(--font-display);font-size:clamp(1.1rem,2vw,1.6rem);color:#fff;line-height:1.2;">Кофейня в контейнере с муралом ≠ кофейня в контейнере.</p>
+    </blockquote>
+  </div>
+</section>
+
+<section style="background:#2a2825;border-top:2px solid rgba(217,112,62,0.4);border-bottom:2px solid rgba(217,112,62,0.4);min-height:auto;padding:clamp(2.5rem,6vh,5rem) clamp(1.5rem,5vw,5rem);">
+  <div class="container">
+    <span class="label">Мировой референс</span>
+    <h2>North West Walls — Бельгия</h2>
+    <p style="color:var(--text-dim);font-size:clamp(0.85rem,1.2vw,1rem);margin:clamp(0.5rem,1vh,1rem) 0 clamp(1rem,2vh,1.5rem);">Самый эстетичный контейнерный арт-проект в мире. Куратор — Arne Quinze. Каждый год на Rock Werchter выстраивают башни из контейнеров, расписанных топовыми стрит-артистами.</p>
+    <div class="image-row" style="grid-template-columns:repeat(3,1fr);">
+      <img src="img/img5_refs_new.jpg" alt="" loading="lazy" style="aspect-ratio:1/1;max-height:30vh;">
+      <img src="img/idea5-КОНТЕЙНЕР-6.jpg" alt="" loading="lazy" style="aspect-ratio:1/1;max-height:30vh;">
+      <img src="img/idea5-КОНТЕЙНЕР-7.jpg" alt="" loading="lazy" style="aspect-ratio:1/1;max-height:30vh;">
+    </div>
+  </div>
+</section>
+
+<section class="section-surface section-sep">
+  <div class="container">
+    <span class="label">Смета — Идея 5</span>
+    <h2>Примерный расчёт</h2>
+    <p style="color:var(--text-dim);font-size:clamp(0.8rem,1.1vw,0.9rem);margin:clamp(0.3rem,0.8vh,0.5rem) 0 clamp(1rem,2vh,1.5rem);font-style:italic;">Контейнеры — на стороне клиента. Мы делаем роспись и кураторство.</p>
+    <table class="cost-table">
+      <tr><td class="cat" colspan="2">Роспись длинной стороны 40-фут контейнера (~55 м²)</td></tr>
+      <tr><td>1 художник — полное покрытие длинной стороны одного контейнера (грунт + акрил)</td><td class="price">100 000 – 150 000 ₽ / контейнер</td></tr>
+      <tr><td style="padding-left:1.5em;color:var(--text-dim);">При 5 контейнерах (1 художник на каждый)</td><td class="price">500 000 – 750 000 ₽</td></tr>
+      <tr><td class="cat" colspan="2">Фестивальный запуск</td></tr>
+      <tr><td>5 художников, организация события, OPENCALL, фото/видео съёмка, анонсы</td><td class="price">100 000 – 200 000 ₽</td></tr>
+      <tr><td class="cat" colspan="2">Кураторский надзор</td></tr>
+      <tr><td>Проект + логистика + контроль (Такнадо Бюро)</td><td class="price">50 000 – 100 000 ₽</td></tr>
+      <tr style="border-top:2px solid var(--accent);">
+        <td class="total">ИТОГО (5 контейнеров + фестиваль)</td>
+        <td class="total"><span class="price">650 000 – 1 050 000 ₽</span></td>
+      </tr>
+    </table>
+    <p style="color:var(--text-dim);font-size:clamp(0.7rem,0.9vw,0.78rem);font-style:italic;">Контейнеры — на стороне клиента. Масштабируется: больше контейнеров = ниже цена за единицу. НДС отсутствует (ИП на УСН).</p>
+  </div>
+</section>
+
+<!-- ═══ SUMMARY ═══ -->
+<section class="section-light" style="min-height:auto;padding:clamp(3rem,8vh,6rem) clamp(1.5rem,5vw,5rem);">
+  <div class="container" style="text-align:center;">
+    <span class="label" style="display:block;text-align:center;color:var(--accent);">5 идей</span>
+    <h2 style="margin-bottom:clamp(0.5rem,1vh,1rem);color:var(--text-dark);">Город талантов —<br>меню возможностей</h2>
+    <p style="color:var(--text-dark-dim);font-size:clamp(0.9rem,1.3vw,1.05rem);max-width:600px;margin:0 auto clamp(2rem,4vh,3rem);">5 арт-объектов. От 242 тысяч до 1,67 миллиона. Собери свою комбинацию.</p>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:clamp(0.5rem,0.8vw,0.8rem);text-align:left;">
+      <a href="#div1" style="text-decoration:none;color:inherit;"><div class="card" style="cursor:pointer;"><img src="img/kuzbass-art.jpg" alt="" loading="lazy" class="thumb"><h3>Кузбасс-арт</h3><p style="font-size:clamp(0.65rem,0.8vw,0.75rem);">Волги ГАЗ-24 в земле</p><p style="font-family:var(--font-mono);font-size:clamp(0.65rem,0.8vw,0.75rem);color:var(--accent-warm);margin-top:auto;">0,84–1,67 млн</p></div></a>
+      <a href="#div2" style="text-decoration:none;color:inherit;"><div class="card" style="cursor:pointer;"><img src="img/idea2-okuda-art.jpg" alt="" loading="lazy" class="thumb"><h3>Кузбасс-метро</h3><p style="font-size:clamp(0.65rem,0.8vw,0.75rem);">Вагон-галерея</p><p style="font-family:var(--font-mono);font-size:clamp(0.65rem,0.8vw,0.75rem);color:var(--accent-warm);margin-top:auto;">0,50–1,02 млн</p></div></a>
+      <a href="#div3" style="text-decoration:none;color:inherit;"><div class="card" style="cursor:pointer;"><img src="img/idea3-ФОТОСПОТ-1.png.jpg" alt="" loading="lazy" class="thumb"><h3>Фотоспот</h3><p style="font-size:clamp(0.65rem,0.8vw,0.75rem);">Сцена для контента</p><p style="font-family:var(--font-mono);font-size:clamp(0.65rem,0.8vw,0.75rem);color:var(--accent-warm);margin-top:auto;">0,24–0,63 млн</p></div></a>
+      <a href="#div4" style="text-decoration:none;color:inherit;"><div class="card" style="cursor:pointer;"><img src="img/idea4-zil-side.jpg" alt="" loading="lazy" class="thumb"><h3>ГАРАЖ №130</h3><p style="font-size:clamp(0.65rem,0.8vw,0.75rem);">Мобильная галерея</p><p style="font-family:var(--font-mono);font-size:clamp(0.65rem,0.8vw,0.75rem);color:var(--accent-warm);margin-top:auto;">0,52–0,98 млн</p></div></a>
+      <a href="#div5" style="text-decoration:none;color:inherit;"><div class="card" style="cursor:pointer;"><img src="img/idea5-КОНТЕЙНЕР-2.jpg" alt="" loading="lazy" class="thumb"><h3>Контейнер-арт</h3><p style="font-size:clamp(0.65rem,0.8vw,0.75rem);">Роспись + фестиваль</p><p style="font-family:var(--font-mono);font-size:clamp(0.65rem,0.8vw,0.75rem);color:var(--accent-warm);margin-top:auto;">0,65–1,05 млн</p></div></a>
+    </div>
+    <div style="margin:clamp(5rem,12vh,8rem) 0;">
+      <p style="font-family:var(--font-display);font-size:clamp(2rem,4.5vw,3.5rem);line-height:1.1;max-width:850px;margin:0 auto 1.5rem;background:linear-gradient(180deg,transparent 60%,rgba(217,112,62,0.35) 60%);display:inline;padding:0 0.15em;color:var(--text-dark);">Искусство, которое невозможно проскроллить.</p>
+      <p style="color:var(--text-dark-dim);font-size:clamp(0.9rem,1.3vw,1.05rem);margin-top:2rem;">Узнаваемость · Виральность · Арендный доход · Точка на карте</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ EXPERTISE ═══ -->
+<section class="section-surface" style="min-height:auto;padding:clamp(3rem,6vh,5rem) clamp(1.5rem,5vw,5rem);">
+  <div class="container">
+    <span class="label">Кто мы</span>
+    <h2>TAKNADO BÜRO —<br>интеллигентный стрит-арт</h2>
+    <div class="card-grid" style="margin-top:clamp(1.5rem,3vh,2.5rem);">
+      <div class="card"><h3>400+</h3><p>проектов по России, Европе, Азии. От частных интерьеров до публичных пространств.</p></div>
+      <div class="card"><h3>Сбер, 2ГИС, ИКЕА</h3><p>и ещё сотни брендов работали с нами. Портфолио — по ссылкам ниже.</p></div>
+      <div class="card"><h3>Под ключ</h3><p>Эскиз → логистика → роспись → документооборот. Личный менеджер на каждом проекте.</p></div>
+      <div class="card card-accent"><h3>Гарантия 24 мес</h3><p>Фасадный акрил. Срок службы 10+ лет. Специальный грунт для адгезии.</p></div>
+    </div>
+    <div style="display:flex;gap:1rem;margin-top:clamp(2rem,4vh,3rem);flex-wrap:wrap;justify-content:center;">
+      <a href="https://tak-nado.com" target="_blank" rel="noopener" class="exp-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        TAK-NADO.COM
+      </a>
+      <a href="https://instagram.com/taknado.buro" target="_blank" rel="noopener" class="exp-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>
+        @TAKNADO.BURO
+      </a>
+      <a href="https://youtube.com/@taknado" target="_blank" rel="noopener" class="exp-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29.94 29.94 0 0 0 1 11.75a29.94 29.94 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29.94 29.94 0 0 0 .46-5.25 29.94 29.94 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+        YOUTUBE
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer" id="contact">
+  <a href="#top" style="display:inline-flex;flex-direction:column;align-items:center;gap:0.5rem;margin-bottom:2rem;text-decoration:none;transition:transform .25s,opacity .25s;opacity:0.7;" onmouseover="this.style.transform='translateY(-5px)';this.style.opacity='1'" onmouseout="this.style.transform='';this.style.opacity='0.7'">
+  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="19" stroke="white" stroke-width="1.5"/><path d="M20 27V13M20 13L13 20M20 13L27 20" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <span style="font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.2em;color:#fff;text-transform:uppercase;">В начало</span>
+</a>
+  <p class="brand">TAKNADO BÜRO</p>
+  <p style="color:var(--text-dim);font-size:clamp(0.9rem,1.2vw,1rem);margin-bottom:clamp(1.5rem,3vh,2.5rem);">Агентство росписи стен. Интеллигентный стрит-арт.</p>
+  <div class="social">
+    <a href="https://tak-nado.com" target="_blank" rel="noopener">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      tak-nado.com
+    </a>
+    <a href="https://instagram.com/taknado.buro" target="_blank" rel="noopener">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>
+      @taknado.buro
+    </a>
+    <a href="https://youtube.com/@taknado" target="_blank" rel="noopener">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29.94 29.94 0 0 0 1 11.75a29.94 29.94 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29.94 29.94 0 0 0 .46-5.25 29.94 29.94 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+      YouTube
+    </a>
+  </div>
+  <p class="credit" style="margin-top:clamp(1.5rem,3vh,2.5rem);">Марина Яковлева — менеджер проектов · +7 995 258 8221</p>
+  <p class="credit" style="margin-top:0.3rem;">Презентация: Иван Ягода — арт-директор TAKNADO BÜRO</p>
+</footer>
+
+<script>
+  // sticky header
+  const hdr = document.getElementById('site-header');
+  if(hdr){
+    const hero = document.querySelector('.hero');
+    if(hero){
+      new IntersectionObserver(([e])=>{
+        hdr.classList.toggle('scrolled', !e.isIntersecting);
+      },{threshold:0}).observe(hero);
+    }
+  }
+  // idea-chip scroll
+  document.querySelectorAll('.idea-chip').forEach(chip=>{
+    chip.addEventListener('click',()=>{
+      const target = document.querySelector(chip.dataset.target);
+      if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
+    });
+  });
+</script>
+</body>
+</html>
